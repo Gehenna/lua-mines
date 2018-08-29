@@ -1,42 +1,50 @@
-local Button = require "Button"
+gui = require('Gspot')
+
+font = love.graphics.newFont(192)
+local DIV = love._version_major >= 11 and 1/255 or 1
 
 function love.load()
-   MINE = 9    -- mine define
-   XSIZE = 10
-   YSIZE = 10
+    MINE = 9    -- mine define
+    XSIZE = 10
+    YSIZE = 10
 
-   tile = love.graphics.newImage("images/tile.png")
-   example = love.graphics.newImage("images/example.png")
-   
-   button = Button:init("None", "images/tile.png", "images/example.png", 400, 400, 30, 30, 0, 1)
+    love.graphics.setFont(font)
+    love.graphics.setColor(255 * DIV, 192 * DIV, 0 * DIV, 128 * DIV)
 
-   playingBoard = initBoard(XSIZE, YSIZE, 10)
+    playingBoard = initBoard(XSIZE, YSIZE, 10)
+
+    local button = gui:button('A Button', {x = 200, y = 200, w = 128, h = 128})
+        button.click = function(this, x, y) -- set element:click() to make it respond to gui's click event
+		    gui:feedback(tostring(this))
+	    end
 end
 
 function love.update(dt)
-
+  gui:update(dt)
 end
 
-function love.mousepressed(mx, my, button, isTouch)
-    -- if button == 1 and
-    -- mx >= 400 and mx < 400 + tile:getWidth() and
-    -- my >= 400 and my < 400 + tile:getHeight() then
-    --     tile = love.graphics.newImage("images/example.png")
-    -- else
-    --     tile = love.graphics.newImage("images/tile.png")
-    -- end
+function love.mousepressed(x, y, button)
+	gui:mousepress(x, y, button) -- pretty sure you want to register mouse events
+end
+
+function love.mousereleased(x, y, button)
+	gui:mouserelease(x, y, button)
+end
+
+function love.wheelmoved(x, y)
+	gui:mousewheel(x, y)
 end
 
 function love.draw()
-    love.graphics.draw(tile, 400, 400, 0, .4, .4)
+    gui:draw()
 
     -- Print values of playing board:
-    for i=1,XSIZE do
-       for j=1,YSIZE do
-           love.graphics.print(tostring(playingBoard[i][j]), i*25, j*25)
-       end
-       print()
-   end
+    -- for i=1,XSIZE do
+    --    for j=1,YSIZE do
+    --        love.graphics.print(tostring(playingBoard[i][j]), i*25, j*25)
+    --    end
+    --    print()
+    -- end
 end
 
 function initBoard(xsize, ysize, numberOfMines)
