@@ -1,25 +1,24 @@
-<<<<<<< HEAD
 gui = require('Gspot')
 
 font = love.graphics.newFont(192)
 local DIV = love._version_major >= 11 and 1/255 or 1
 
 function love.load()
-    MINE = 9    -- mine define
-    XSIZE = 10
-    YSIZE = 10
+   MINE = "X"    -- mine define
+   XSIZE = 10
+   YSIZE = 10
 
-    love.graphics.setFont(font)
-    love.graphics.setColor(255 * DIV, 192 * DIV, 0 * DIV, 128 * DIV)
+   playingBoard = initBoard(XSIZE, YSIZE, 10)
 
-    playingBoard = initBoard(XSIZE, YSIZE, 10)
-
-    local button = gui:button('A Button', {x = 200, y = 200, w = 128, h = 128})
-        button.click = function(this, x, y) -- set element:click() to make it respond to gui's click event
-		    gui:feedback(tostring(this))
-	    end
-=======
->>>>>>> c4cf47bfec67048642a3809ad6e7175c3210a70b
+   -- love.graphics.setFont(font)
+   -- love.graphics.setColor(255 * DIV, 192 * DIV, 0 * DIV, 128 * DIV)
+   --
+   -- playingBoard = initBoard(XSIZE, YSIZE, 10)
+   --
+   -- local button = gui:button('A Button', {x = 200, y = 200, w = 128, h = 128})
+   --     button.click = function(this, x, y) -- set element:click() to make it respond to gui's click event
+   --         gui:feedback(tostring(this))
+   --     end
 end
 
 function love.update(dt)
@@ -39,18 +38,14 @@ function love.wheelmoved(x, y)
 end
 
 function love.draw()
-<<<<<<< HEAD
     gui:draw()
 
     -- Print values of playing board:
-    -- for i=1,XSIZE do
-    --    for j=1,YSIZE do
-    --        love.graphics.print(tostring(playingBoard[i][j]), i*25, j*25)
-    --    end
-    --    print()
-    -- end
-=======
->>>>>>> c4cf47bfec67048642a3809ad6e7175c3210a70b
+    for i=1,XSIZE do
+       for j=1,YSIZE do
+           love.graphics.print(tostring(playingBoard[i][j]), i*25, j*25)
+       end
+   end
 end
 
 function initBoard(xsize, ysize, numberOfMines)
@@ -66,7 +61,6 @@ function initBoard(xsize, ysize, numberOfMines)
 
     -- place mines:
     bombsCounter = 0
-    numberOfMines = 10
     while (bombsCounter < numberOfMines) do
         -- create random x & y values:
         randomX = math.random(1, xsize)
@@ -80,53 +74,69 @@ function initBoard(xsize, ysize, numberOfMines)
         end
     end
 
+    function sum(...)
+        local s = 0
+        for _,v in ipairs{...} do
+            s = s + v
+        end
+        return s
+    end
+
     -- update the other values:
     for i=1,xsize do
         for j=1,ysize do
             if(board[i][j] ~= MINE) then
                 -- Check if left upper square contains mine:
+                if(i-1 >= 1) and (j-1 >= 1) then
                     if(board[i-1][j-1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if upper square contains mine:
+                if (j-1 >= 1) then
                     if(board[i][j-1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if right upper square contains mine:
+                if (i+1 <= xsize) and (j-1 >= 1) then
                     if(board[i+1][j-1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if left square contains mine:
+                if (i-1 >= 1) then
                     if(board[i-1][j] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if right square contains mine:
+                if (i+1 <= xsize) then
                     if(board[i+1][j] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if left lower square contains mine:
+                if(i-1 >= 1) and (j+1 <= ysize) then
                     if(board[i-1][j+1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if lower square contains mine:
+                if (j+1 <= ysize) then
                     if(board[i][j+1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if right lower square contains mine:
+                if (i+1 <= xsize) and (j+1 <= ysize) then
                     if(board[i+1][j+1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
