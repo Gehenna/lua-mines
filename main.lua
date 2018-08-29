@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 gui = require('Gspot')
 
 font = love.graphics.newFont(192)
@@ -17,6 +18,8 @@ function love.load()
         button.click = function(this, x, y) -- set element:click() to make it respond to gui's click event
 		    gui:feedback(tostring(this))
 	    end
+=======
+>>>>>>> c4cf47bfec67048642a3809ad6e7175c3210a70b
 end
 
 function love.update(dt)
@@ -36,6 +39,7 @@ function love.wheelmoved(x, y)
 end
 
 function love.draw()
+<<<<<<< HEAD
     gui:draw()
 
     -- Print values of playing board:
@@ -45,6 +49,8 @@ function love.draw()
     --    end
     --    print()
     -- end
+=======
+>>>>>>> c4cf47bfec67048642a3809ad6e7175c3210a70b
 end
 
 function initBoard(xsize, ysize, numberOfMines)
@@ -79,56 +85,48 @@ function initBoard(xsize, ysize, numberOfMines)
         for j=1,ysize do
             if(board[i][j] ~= MINE) then
                 -- Check if left upper square contains mine:
-                if(i-1 > 1) and (j-1 > 1) then
                     if(board[i-1][j-1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if upper square contains mine:
-                if (j-1 > 1) then
                     if(board[i][j-1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if right upper square contains mine:
-                if (i+1 < xsize) and (j-1 > 1) then
                     if(board[i+1][j-1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if left square contains mine:
-                if (i-1 > 1) then
                     if(board[i-1][j] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if right square contains mine:
-                if (i+1 < xsize) then
                     if(board[i+1][j] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if left lower square contains mine:
-                if(i-1 > 1) and (j+1 > ysize) then
                     if(board[i-1][j+1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if lower square contains mine:
-                if (j+1 < ysize) then
                     if(board[i][j+1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
                 end
 
                 -- Check if right lower square contains mine:
-                if (i+1 < xsize) and (j+1 > ysize) then
                     if(board[i+1][j+1] == MINE) then
                         board[i][j] = board[i][j] + 1
                     end
