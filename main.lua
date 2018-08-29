@@ -26,7 +26,6 @@ function love.draw()
        for j=1,YSIZE do
            love.graphics.print(tostring(playingBoard[i][j]), i*25, j*25)
        end
-       print()
    end
 end
 
@@ -43,7 +42,6 @@ function initBoard(xsize, ysize, numberOfMines)
 
     -- place mines:
     bombsCounter = 0
-    numberOfMines = 10
     while (bombsCounter < numberOfMines) do
         -- create random x & y values:
         randomX = math.random(1, xsize)
@@ -55,6 +53,14 @@ function initBoard(xsize, ysize, numberOfMines)
             board[randomX][randomY] = MINE
             bombsCounter = bombsCounter + 1
         end
+    end
+
+    function sum(...)
+        local s = 0
+        for _,v in ipairs{...} do
+            s = s + v
+        end
+        return s
     end
 
     -- update the other values:
